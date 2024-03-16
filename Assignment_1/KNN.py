@@ -36,12 +36,18 @@ class KNN (object):
             closest_label = self.labels_train[np.argsort(distances[i])[:k]]
             label_pred[i] = np.argmax(np.bincount(closest_label))
         return label_pred
+
     def test(self, data, k=1, model='l1'):
         if  model == 'l1':
             distances = self.compute_distances_l1(data)
 
         elif model == 'l2':
             distances = self.compute_distances_l2(data)
+
+        else:
+            raise ValueError('Invalid value %s for model' % model)
+
+        return self.predict_labels(distances, k=k)
 
 
 
